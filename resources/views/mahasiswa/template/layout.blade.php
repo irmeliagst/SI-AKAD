@@ -106,8 +106,8 @@
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <h6 class="mb-0 small">John Doe</h6>
-                            <small class="text-muted">Mahasiswa</small>
+                            <h6 class="mb-0 small">{{auth()->guard('mahasiswa')->user()->nama}}</h6>
+                            <small class="text-muted">{{auth()->guard('mahasiswa')->user()->nim}}</small>
                           </div>
                         </div>
                       </a>
@@ -144,7 +144,7 @@
                     </li>
                     <li>
                       <div class="d-grid px-4 pt-2 pb-1">
-                        <a class="btn btn-danger d-flex" href="javascript:void(0);">
+                        <a class="btn btn-danger d-flex" href="{{route('mahasiswa.logout')}}">
                           <small class="align-middle">Logout</small>
                           <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
                         </a>

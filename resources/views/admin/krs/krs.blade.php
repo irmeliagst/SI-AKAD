@@ -44,7 +44,7 @@
                                             <!-- Input Nama Mahasiswa -->
                                             <div class="col mb-3">
                                                 <div class="form-floating form-floating-outline">
-                                                    <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama" required readonly>
+                                                    <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama" required >
                                                     <label>Nama</label>
                                                 </div>
                                             </div>
@@ -63,7 +63,7 @@
                                             <!-- Input Nama MK -->
                                             <div class="col mb-3">
                                                 <div class="form-floating form-floating-outline">
-                                                    <input type="text" name="nama_mk" id="nama_mk" class="form-control" placeholder="Nama MK" required readonly>
+                                                    <input type="text" name="nama_mk" id="nama_mk" class="form-control" placeholder="Nama MK" required >
                                                     <label>Nama Mata Kuliah</label>
                                                 </div>
                                             </div>

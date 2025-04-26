@@ -26,7 +26,7 @@
 
         <form action="{{ route('presensi.store') }}" method="POST" class="row g-3 align-items-center">
           @csrf
-          <input type="hidden" name="nim" value="{{ auth()->user()->nim }}">
+          <input type="hidden" name="nim" value="{{ auth()->guard('mahasiswa')->user()->nim }}">
           <input type="hidden" name="kode_mk" value="{{ $item->kode_mk }}">
           <input type="hidden" name="hari" value="{{ $item->hari }}">
           <input type="hidden" name="tanggal" value="{{ date('Y-m-d') }}">

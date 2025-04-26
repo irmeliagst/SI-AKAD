@@ -21,7 +21,7 @@ class PengampuController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode_mk' => 'required|exists:matkul,kode_mk',
+            'kode_mk' => 'required|exists:matakuliah,kode_mk',
             'nip'     => 'required|exists:dosen,nip',
         ]);
 
@@ -30,7 +30,7 @@ class PengampuController extends Controller
             'nip'     => $request->nip,
         ]);
 
-        return redirect()->route('pengampu.index')->with('success', 'Data pengampu berhasil ditambahkan.');
+        return redirect()->route('pengampu')->with('success', 'Data pengampu berhasil ditambahkan.');
     }
 
 }

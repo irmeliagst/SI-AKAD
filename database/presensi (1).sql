@@ -138,6 +138,7 @@ CREATE TABLE `mahasiswa` (
   `nama` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `alamat` text COLLATE utf8mb4_unicode_ci,
   `nohp` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(70) DEFAULT NULL,
   `semester` int(11) DEFAULT NULL,
   `id_gol` bigint(20) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
