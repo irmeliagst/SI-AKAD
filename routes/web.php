@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\MatkulController;
 use App\Http\Controllers\Admin\PengampuController;
 use App\Http\Controllers\Admin\PresensiController;
 use App\Http\Controllers\Admin\RuangController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Mahasiswa\MahasiswaController as MahasiswaMahasiswaController;
+use App\Models\Golongan;
 use App\Models\Matkul;
 use Illuminate\Support\Facades\Route;
 
@@ -36,26 +38,53 @@ Route::get('/', function () {
 Route::prefix('admin')->group(function(){
     Route::resource('dosen', DosenController::class);
     Route::get('pengampu', [PengampuController::class, 'index'])->name('pengampu');
+    Route::post('/pengampu', [PengampuController::class, 'store'])->name('pengampu.store');
     Route::get('presensi', [PresensiController::class, 'index'])->name('presensi');
+    Route::get('presensi', [PresensiController::class, 'store'])->name('presensi.store');
     Route::get('jadwal', [JadwalController::class, 'index'])->name('jadwal');
     Route::get('krs', [KrsController::class, 'index'])->name('krs');
     Route::get('ruang', [RuangController::class, 'index'])->name('ruang');
-    Route::get('/ruang/{id}/edit', [RuangController::class, 'edit'])->name('ruang.edit');
-    Route::put('/ruang/{id}', [RuangController::class, 'update'])->name('ruang.update');
+    Route::post('/ruang', [RuangController::class, 'store'])->name('ruang.store');
+    Route::put('/ruang/update/{id}', [RuangController::class, 'update'])->name('ruang.update');
     Route::delete('/ruang/{id}', [RuangController::class, 'destroy'])->name('ruang.destroy');
-    Route::get('mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
-    Route::get('/mahasiswa/{nim}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
-    Route::put('/mahasiswa/{nim}', [MahasiswaController::class, 'update'])->name('mahasiswa.update');
-    Route::delete('/mahasiswa/{nim}', [MahasiswaController::class, 'destroy'])->name('mahasiswa.destroy');
+    Route::get('mahasiswa', [MahasiswaController::class, 'index'])->name('admin.mahasiswa.mahasiswa');
+    Route::post('/mahasiswa', [MahasiswaController::class, 'store'])->name('mahasiswa.store');
+    Route::get('/mahasiswa/{nim}/edit', [MahasiswaController::class, 'edit'])->name('admin.mahasiswa.edit');
+    Route::put('/mahasiswa/{nim}', [MahasiswaController::class, 'update'])->name('admin.mahasiswa.update');
+    Route::delete('/mahasiswa/{nim}', [MahasiswaController::class, 'destroy'])->name('admin.mahasiswa.destroy');
     Route::get('matkul', [MatkulController::class, 'index'])->name('matkul');
-    Route::get('/matakuliah', [MatkulController::class, 'index'])->name('matakuliah.index');
-    Route::get('/matakuliah/{kode_mk}/edit', [MatkulController::class, 'edit'])->name('matakuliah.edit');
-    Route::put('/matakuliah/{kode_mk}', [MatkulController::class, 'update'])->name('matakuliah.update');
-    Route::delete('/matakuliah/{kode_mk}', [MatkulController::class, 'destroy'])->name('matakuliah.destroy');
+    Route::get('/matakuliah', [MatkulController::class, 'index'])->name('matkul.index');
+    Route::put('/matakuliah/{kode_mk}', [MatkulController::class, 'update'])->name('matkul.update');
+    Route::delete('/matakuliah/{kode_mk}', [MatkulController::class, 'destroy'])->name('matkul.destroy');
+    Route::post('/matakuliah', [MatkulController::class, 'store'])->name('matkul.store');
     Route::resource('golongan', GolonganController::class);
+    Route::get('golongan', [GolonganController::class, 'index'])->name('golongan');
+    Route::get('/golongan', [GolonganController::class, 'index'])->name('golongan.index');
+    Route::post('/golongan', [GolonganController::class, 'store'])->name('golongan.store');
+    Route::put('admin/golongan/{id_gol}', [GolonganController::class, 'update'])->name('golongan.update');
+
+    Route::post('/krs', [KrsController::class, 'store'])->name('krs.store');
+    Route::resource('jadwal', JadwalController::class);
+    Route::resource('ruang', RuangController::class);
+    Route::resource('mahasiswa', MahasiswaController::class);
 });
 
 Route::prefix('mahasiswa')->group(function(){
     Route::get('/', [MahasiswaMahasiswaController::class, 'index'])->name('mahasiswa');
 });
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard')->middleware('role:admin');
+
+    Route::get('/mahasiswa/dashboard', function () {
+        return view('mahasiswa.dashboard');
+    })->name('mahasiswa.dashboard')->middleware('role:mahasiswa');
+});
+
 

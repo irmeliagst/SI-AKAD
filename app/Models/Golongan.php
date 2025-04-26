@@ -11,10 +11,16 @@ class Golongan extends Model
     protected $table = 'golongan';
     protected $primaryKey = 'id_gol';
 
-    protected $fillable = ['nama_gol'];
+    protected $fillable = ['id_gol', 'nama_gol'];
 
+    // public function mahasiswa()
+    // {
+    //     return $this->hasMany(Mahasiswa::class, 'id_gol');
+    // }
+
+    // Relasi dengan Mahasiswa
     public function mahasiswa()
     {
-        return $this->hasMany(Mahasiswa::class, 'id_gol');
+        return $this->hasMany(Mahasiswa::class);
     }
 }

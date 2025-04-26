@@ -12,59 +12,86 @@
                     type="button"
                     class="btn btn-primary"
                     data-bs-toggle="modal"
-                    data-bs-target="#basicModal">
+                    data-bs-target="#addKrsModal">
                     Add
                 </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+                <!-- Modal for Adding KRS -->
+                <div class="modal fade" id="addKrsModal" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
-                                <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <h5 class="modal-title" id="exampleModalLabel1">Add KRS</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="row">
-                                    <div class="col mb-6 mt-2">
-                                        <div class="form-floating form-floating-outline">
-                                            <input type="text" id="nameBasic" class="form-control" placeholder="Enter Name" />
-                                            <label for="nameBasic">Name</label>
+                                <form action="{{ route('krs.store') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <!-- Input NIM -->
+                                            <div class="col mb-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <select name="nim" id="nim" class="form-control" required>
+                                                        <option value="">-- Pilih NIM --</option>
+                                                        @foreach($mahasiswa as $mhs)
+                                                        <option value="{{ $mhs->nim }}" data-nama="{{ $mhs->nama }}">{{ $mhs->nim }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label>NIM</label>
+                                                </div>
+                                            </div>
+                                            <!-- Input Nama Mahasiswa -->
+                                            <div class="col mb-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <input type="text" name="nama" id="nama" class="form-control" placeholder="Nama" required readonly>
+                                                    <label>Nama</label>
+                                                </div>
+                                            </div>
+                                            <!-- Input Kode MK -->
+                                            <div class="col mb-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <select name="kode_mk" id="kode_mk" class="form-control" required>
+                                                        <option value="">-- Pilih Kode MK --</option>
+                                                        @foreach($mataKuliah as $mk)
+                                                        <option value="{{ $mk->kode_mk }}" data-nama="{{ $mk->nama_mk }}">{{ $mk->kode_mk }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <label>Kode Mata Kuliah</label>
+                                                </div>
+                                            </div>
+                                            <!-- Input Nama MK -->
+                                            <div class="col mb-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <input type="text" name="nama_mk" id="nama_mk" class="form-control" placeholder="Nama MK" required readonly>
+                                                    <label>Nama Mata Kuliah</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col mb-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <input type="number" name="sks" class="form-control" placeholder="SKS" required>
+                                                    <label>SKS</label>
+                                                </div>
+                                            </div>
+                                            <div class="col mb-3">
+                                                <div class="form-floating form-floating-outline">
+                                                    <input type="number" name="semester" class="form-control" placeholder="Semester" required>
+                                                    <label>Semester</label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row g-4">
-                                    <div class="col mb-2">
-                                        <div class="form-floating form-floating-outline">
-                                            <input
-                                                type="email"
-                                                id="emailBasic"
-                                                class="form-control"
-                                                placeholder="xxxx@xxx.xx" />
-                                            <label for="emailBasic">Email</label>
-                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
-                                    <div class="col mb-2">
-                                        <div class="form-floating form-floating-outline">
-                                            <input type="date" id="dobBasic" class="form-control" />
-                                            <label for="dobBasic">DOB</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -87,11 +114,72 @@
                             <td>{{ $item->kode_mk }}</td>
                             <td>{{ $item->matakuliah->nama_mk ?? '-' }}</td>
                             <td>
-                                <form action="{{ route('krs.destroy', ['nim' => $item->nim, 'kode_mk' => $item->kode_mk]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</button>
-                                </form>
+                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editKrsModal{{ $item->nim }}">
+                                    Edit
+                                </button>
+
+                                <!-- Modal for Editing KRS -->
+                                <div class="modal fade" id="editKrsModal{{ $item->nim }}" tabindex="-1" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Edit KRS</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{ route('krs.update') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="nim" value="{{ $item->nim }}">
+                                                    <div class="modal-body">
+                                                        <div class="row">
+                                                            <div class="col mb-3">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input type="text" name="nim" class="form-control" value="{{ $item->nim }}" readonly>
+                                                                    <label>NIM</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-3">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input type="text" name="nama" class="form-control" value="{{ $item->mahasiswa->nama }}" readonly>
+                                                                    <label>Nama</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-3">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input type="text" name="kode_mk" class="form-control" value="{{ $item->kode_mk }}" readonly>
+                                                                    <label>Kode Mata Kuliah</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-3">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input type="text" name="nama_mk" class="form-control" value="{{ $item->matakuliah->nama_mk }}" readonly>
+                                                                    <label>Nama Mata Kuliah</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col mb-3">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input type="number" name="sks" class="form-control" value="{{ $item->sks }}" required>
+                                                                    <label>SKS</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col mb-3">
+                                                                <div class="form-floating form-floating-outline">
+                                                                    <input type="number" name="semester" class="form-control" value="{{ $item->semester }}" required>
+                                                                    <label>Semester</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                         @endforeach
@@ -107,4 +195,24 @@
         </div>
     </div>
 </div>
+
+@section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Ketika NIM dipilih
+        document.getElementById('nim').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var namaMahasiswa = selectedOption.getAttribute('data-nama');
+            document.getElementById('nama').value = namaMahasiswa;
+        });
+
+        // Ketika Kode MK dipilih
+        document.getElementById('kode_mk').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var namaMk = selectedOption.getAttribute('data-nama');
+            document.getElementById('nama_mk').value = namaMk;
+        });
+    });
+</script>
+@endsection
 @endsection

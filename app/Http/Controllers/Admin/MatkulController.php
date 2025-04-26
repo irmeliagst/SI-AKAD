@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Dosen;
 use App\Models\Matkul;
 use Illuminate\Http\Request;
 
@@ -11,34 +12,43 @@ class MatkulController extends Controller
     function index()
     {
         $matakuliah = Matkul::all();
-        return view('matkul.matkul', compact('matakuliah'));
+        $matkul = Matkul::all();
+        $dosen = Dosen::all();
+        return view('admin.matkul.matkul', compact('matakuliah'));
+        
     }
 
-    public function destroy($kode_mk)
+    public function store(Request $request)
     {
-        $mk = Matkul::findOrFail($kode_mk);
-        $mk->delete();
-        return redirect()->route('matakuliah.index')->with('success', 'Data mata kuliah berhasil dihapus.');
-    }
+        $request->validate([
+            'kode_mk' => 'required|unique:matakuliah,kode_mk',
+            'nama_mk' => 'required',
+            'sks' => 'required|numeric',
+            'semester' => 'required|numeric',
+        ]);
 
-    // Tambahan jika ingin edit/update
-    public function edit($kode_mk)
-    {
-        $mk = Matkul::findOrFail($kode_mk);
-        return view('matakuliah.edit', compact('mk'));
+        Matkul::create($request->all());
+
+        return redirect()->route('matkul.index')->with('success', 'Data berhasil ditambahkan');
     }
 
     public function update(Request $request, $kode_mk)
     {
         $request->validate([
-            'nama_mk' => 'required|string|max:100',
-            'sks' => 'nullable|integer',
-            'semester' => 'nullable|integer',
+            'nama_mk' => 'required',
+            'sks' => 'required|numeric',
+            'semester' => 'required|numeric',
         ]);
 
         $mk = Matkul::findOrFail($kode_mk);
         $mk->update($request->all());
 
-        return redirect()->route('matakuliah.index')->with('success', 'Data mata kuliah berhasil diperbarui.');
+        return redirect()->route('matkul.index')->with('success', 'Data berhasil diubah');
+    }
+
+    public function destroy($kode_mk)
+    {
+        Matkul::destroy($kode_mk);
+        return redirect()->route('matkul.index')->with('success', 'Data berhasil dihapus');
     }
 }

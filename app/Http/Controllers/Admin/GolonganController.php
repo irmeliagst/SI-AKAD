@@ -11,21 +11,30 @@ class GolonganController extends Controller
     public function index()
     {
         $golongan = Golongan::all();
-        return view('golongan.index', compact('golongan'));
+        return view('admin.golongan.golongan', compact('golongan'));
     }
 
+    // public function create()
+    // {
+    //     return view('golongan.create');
+    // }
     public function create()
     {
-        return view('golongan.create');
+        $golongan = Golongan::all(); // Fetch all golongan records
+        return view('mahasiswa.create', compact('golongan'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'id_gol' => 'required|string|max:10|unique:golongan,id_gol',
             'nama_gol' => 'required|string|max:100',
         ]);
 
-        Golongan::create($request->all());
+        Golongan::create([
+            'id_gol' => $request->id_gol,
+            'nama_gol' => $request->nama_gol,
+        ]);
 
         return redirect()->route('golongan.index')->with('success', 'Golongan berhasil ditambahkan.');
     }

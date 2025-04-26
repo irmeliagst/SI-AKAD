@@ -88,7 +88,7 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route("jadwal") }}" class="menu-link">
+              <a href="{{ route("jadwal.index") }}" class="menu-link">
                 <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
                 <div data-i18n="Basic">Jadwal</div>
               </a>
@@ -100,28 +100,28 @@
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route("mahasiswa") }}" class="menu-link">
+              <a href="{{ route("mahasiswa.index") }}" class="menu-link">
                 <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
                 <div data-i18n="Basic">Mahasiswa</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route("matkul") }}" class="menu-link">
+              <a href="{{ route("matkul.index") }}" class="menu-link">
                 <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
                 <div data-i18n="Basic">Mata Kuliah</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route("presensi") }}" class="menu-link">
+              <a href="{{ route("golongan.index") }}" class="menu-link">
                 <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
-                <div data-i18n="Basic">Presensi</div>
+                <div data-i18n="Basic">Golongan</div>
               </a>
             </li>
             <li class="menu-item">
-              <a href="{{ route("ruang") }}" class="menu-link">
+              <a href="{{ route("ruang.index") }}" class="menu-link">
                 <i class="menu-icon tf-icons ri-bank-card-2-line"></i>
                 <div data-i18n="Basic">Ruang</div>
               </a>
-            </li>
+            </li> 
           </ul>
         </aside>

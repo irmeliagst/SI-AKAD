@@ -9,14 +9,16 @@ class Mahasiswa extends Model
 {
     use HasFactory;
     protected $table = 'mahasiswa';
-    protected $primaryKey = 'nim';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    protected $primaryKey = 'nim'; // Ganti id ke nim
 
-    protected $fillable = ['nim', 'nama', 'alamat', 'nohp', 'semester', 'id_gol'];
-
-    public function golongan()
-    {
-        return $this->belongsTo(Golongan::class, 'id_gol');
-    }
+    public $incrementing = false; // Jika nim bukan auto-increment
+    protected $keyType = 'string'; // Jika nim berupa string
+    protected $fillable = [
+        'nim',
+        'nama',
+        'alamat',
+        'nohp',
+        'semester',
+        'golongan',
+    ];
 }

@@ -13,7 +13,7 @@ class PresensiController extends Controller
     function index()
     {
         $presensi = Presensi::all();
-        return view('presensi.presensi', compact('presensi'));
+        return view('admin.presensi.presensi', compact('presensi'));
     }
 
     public function destroy($id)
