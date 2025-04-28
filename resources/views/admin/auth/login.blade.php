@@ -14,7 +14,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Login Basic - Pages | Materio - Bootstrap Material Design Admin Template</title>
+    <title>Login</title>
 
     <meta name="description" content="" />
 
@@ -125,14 +125,10 @@
                     </svg>
                   </span>
                 </span>
-                <span class="app-brand-text demo text-heading fw-semibold">Materio</span>
+                <span class="app-brand-text demo text-heading fw-semibold">Login</span>
               </a>
             </div>
             <!-- /Logo -->
-
-            <div class="card-body mt-1">
-              <h4 class="mb-1">Welcome to Materio! 👋🏻</h4>
-              <p class="mb-5">Silahkan mengisi kolom yang disediakan</p>
 
               <form id="formAuthentication" class="mb-5" action="{{route('admin.login_process')}}" method="POST">
                @csrf

@@ -130,10 +130,8 @@
                         </div>
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->nama }}</td>
+                            <td>{{ $item->matkul->nama_mk }}</td>
                             <td>{{ $item->nip }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->telepon }}</td>
                             <td>
                                 <button
                                     type="button"
@@ -142,7 +140,7 @@
                                     data-bs-target="#basicModal">
                                     Edit
                                 </button>
-                                <form action="{{ route('pengampu.destroy', $item->id) }}" method="POST" class="d-inline">
+                                <form action="" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>

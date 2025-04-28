@@ -46,8 +46,14 @@ class PresensiController extends Controller
             'status_kehadiran' => 'required|in:Hadir,Izin,Sakit,Alfa',
         ]);
 
-        Presensi::create($request->only('nim', 'kode_mk', 'hari', 'tanggal', 'status_kehadiran'));
+        Presensi::create([
+            'nim' => $request->nim,
+            'kode_mk' => $request->kode_mk,
+            'hari' => $request->hari,
+            'tanggal' => $request->tanggal,
+            'status_kehadiran' => $request->status_kehadiran,
+        ]);
 
-        return back()->with('success', 'Presensi berhasil disimpan!');
+        return redirect()->back()->with('success', 'Presensi berhasil dikirim.');
     }
 }

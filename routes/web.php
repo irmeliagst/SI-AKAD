@@ -50,7 +50,8 @@ Route::prefix('admin')->group(function () {
         Route::get('pengampu', [PengampuController::class, 'index'])->name('pengampu');
         Route::post('/pengampu', [PengampuController::class, 'store'])->name('pengampu.store');
         Route::get('presensi', [PresensiController::class, 'index'])->name('presensi');
-        Route::get('presensi', [PresensiController::class, 'store'])->name('presensi.store');
+        // Route::get('presensi', [PresensiController::class, 'store'])->name('presensi.store');
+        Route::post('/presensi', [PresensiController::class, 'store'])->name('presensi.store');
         Route::get('jadwal', [JadwalController::class, 'index'])->name('jadwal');
         Route::get('krs', [KrsController::class, 'index'])->name('krs');
         Route::get('ruang', [RuangController::class, 'index'])->name('ruang');

@@ -7,20 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Presensi extends Model
 {
+    
     use HasFactory;
-    protected $table = 'presensi_akademik';
-    protected $primaryKey = 'id_presensi';
+    protected $table = 'presensi_akademik   '; // nama tabel di database
     protected $fillable = [
-        'hari', 'tanggal', 'status_kehadiran', 'nim', 'kode_mk'
+        'nim', 'kode_mk', 'hari', 'tanggal', 'status_kehadiran'
     ];
-
-    public function mahasiswa()
-    {
-        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
-    }
-
-    public function matakuliah()
-    {
-        return $this->belongsTo(Matkul::class, 'kode_mk', 'kode_mk');
-    }
 }

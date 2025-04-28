@@ -32,5 +32,9 @@ class PengampuController extends Controller
 
         return redirect()->route('pengampu')->with('success', 'Data pengampu berhasil ditambahkan.');
     }
+ 
+    public function destroy($id){
+
+    }
 
 }
